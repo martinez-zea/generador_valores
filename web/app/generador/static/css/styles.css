@@ -1,0 +1,79 @@
+@import "fonts.css";
+
+body{
+  background-color: black;
+  /*cursor: none;*/
+}
+#content{
+  width:1000px;
+  height: 730px;
+  margin:0px auto;
+}
+
+#info_images{
+  margin: 0px auto;
+}
+
+#bottom_info_bg{
+   position: absolute;
+  height:190px;
+  width: 1000px;
+  z-index: 7000;
+  background-color:black;
+  top: 545px;
+  opacity: 0.7;
+}
+
+#bottom_info{
+  position: absolute;
+  height:190px;
+  width: 1000px;
+  z-index: 8000;
+  background-color:transparent;
+  top: 545px;
+}
+
+#actual_state{
+  width: 1000px;
+  height: 184px;
+  padding: 20px;
+}
+.information{
+  font-family:'Lato Regular'; 
+  color: #FAFFCF;
+  font-size: 14px;
+  padding-top: 18px;
+}
+.bold{
+  font-family: 'Lato Bold';
+}
+.bolder{
+  font-family: 'Lato Bold';
+  font-size: 19px;
+}
+.subtitle{
+  font-family: 'Lato Regular';
+  font-size: 12px;
+  color: #CBCBCB;
+}
+.d_graph{
+  padding-top: 9px;
+}
+#day_state{
+  width: 1000px;
+  height: 184px;
+  padding: 20px;
+} 
+#valor_{
+  height: 60px;
+  margin-bottom: 18px;
+}
+#capital_{
+  height: 60px;
+}
+.label_d{
+  padding-top:12px;
+}
+#periodo{
+  color: #CBCBCB;
+}

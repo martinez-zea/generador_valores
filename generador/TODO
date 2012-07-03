@@ -1,0 +1,18 @@
+Tarea: Visualizacion de datos
+Estado: en proceso
+Notas:
+
+----------------------------------------------------------------
+
+Tarea:  Comunicacion serial e integracion en threads
+Estado: escrito, faltan pruebas reales
+Notas: Hay que hacer algo cuando se terminan de imprimir los certs
+        para que no se cree uno nuevo con el siguiente palancazo
+        sin saber si hay una nueva hoja en la maquina
+
+----------------------------------------------------------------
+
+Tarea: Template de jinja
+Estado: crudo
+Notas: Hay que probar como tira en la maquina el actual y ajustar
+        los espacios

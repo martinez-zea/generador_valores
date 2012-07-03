@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openbox_menu xmlns="http://openbox.org/3.4/menu">
+	<menu id="gen_val" label="Generador de valores">
+		<item label="ejecutar app">
+			<action name="Execute">
+				<execute>uzbl-browser -g maximized  http://generador.local.lab/generador/ </execute>
+			</action>
+		</item>
+	</menu>
+	<menu id="None-722032" label="New Menu">
+		<item label="New Item">
+			<action name="Execute">
+				<execute>command</execute>
+			</action>
+		</item>
+	</menu>
+	<menu id="apps-term-menu" label="Terminals">
+		<item label="Roxterm">
+			<action name="Execute">
+				<command>roxterm</command>
+			</action>
+		</item>
+	</menu>
+	<menu id="apps-net-menu" label="Internet">
+		<item label="midori">
+			<action name="Execute">
+				<execute>midori</execute>
+			</action>
+		</item>
+		<item label="uzbl">
+			<action name="Execute">
+				<execute>uzbl-browser</execute>
+			</action>
+		</item>
+	</menu>
+	<menu id="apps-fileman-menu" label="File Managers">
+		<item label="PCMan File Manager">
+			<action name="Execute">
+				<command>pcmanfm</command>
+				<startupnotify>
+					<enabled>yes</enabled>
+				</startupnotify>
+			</action>
+		</item>
+	</menu>
+	<menu id="system-menu" label="System">
+		<item label="wicd">
+			<action name="Execute">
+				<execute>wicd-client -n</execute>
+			</action>
+		</item>
+		<item label="Obmenu">
+			<action name="Execute">
+				<execute>obmenu</execute>
+			</action>
+		</item>
+		<item label="Obconf">
+			<action name="Execute">
+				<execute>obconf</execute>
+			</action>
+		</item>
+		<item label="Reconfigure Openbox">
+			<action name="Reconfigure"/>
+		</item>
+	</menu>
+	<menu id="root-menu" label="Openbox 3">
+		<menu id="gen_val"/>
+		<separator label="Applications"/>
+		<menu id="apps-net-menu"/>
+		<menu id="apps-office-menu"/>
+		<menu id="apps-multimedia-menu"/>
+		<menu id="apps-term-menu"/>
+		<menu id="apps-fileman-menu"/>
+		<separator label="System"/>
+		<menu id="system-menu"/>
+		<separator/>
+		<item label="Log Out">
+			<action name="Exit">
+				<prompt>yes</prompt>
+			</action>
+		</item>
+	</menu>
+</openbox_menu>

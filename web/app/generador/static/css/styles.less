@@ -1,0 +1,93 @@
+@black: #000000;
+@dGray: #333333;
+@lGray: #666666;
+@llGray: #CCCCCC;
+@white: #FFFFFF;
+@scarlet: #660000;
+@yellow: #FFFF33;
+@green: #99CC00;
+
+.font_black{
+	font-family:'Lato Black';
+}
+.font_hair{
+	font-family:'Lato Hairline';
+}
+.font_regular{
+	font-family:'Lato Regular';
+}
+.font_bold{
+	font-family:'Lato Bold';
+}
+.font_light{
+	font-family:'Lato Light';
+}
+
+.border{
+	border: 1px solid @dGray;
+    background-color: @black;
+	padding: 10px;
+    width: 929px;
+}
+
+html{
+    width: 100%; 
+    height: 100%
+}
+
+body{
+	background-color: @black;
+	color: @llGray;
+	font-size: 14px;
+	padding: 0px;
+	font-family: 'Lato Regular', sans-serif;
+	font-weight: 400;
+    width: 100%;
+    height: 100%;
+	.a{
+		text-decoration: none;
+		color: @green;
+		&:hover{color:scarlet - 111}
+	}
+	strong{
+		.font_black;
+	}
+	h1{
+		.font_black;
+		color: @llGray;
+		font-size: 20px;
+	}
+	.hairline{
+		.font_hair;
+        font-size:16px;
+	}
+	.right{
+		text-align: right;
+	}
+    .subtitle{
+        .font_light;    
+    }
+}
+#actual_state{
+	.border;
+    height: 204px;
+    margin-right: 0px;
+	#timestamp{
+		margin-bottom: 5px;
+	}
+	.information{
+		padding-top: 23px;
+	}
+}
+
+#day_state{
+	.border;
+	margin-top:5px;
+}
+#header{
+    width:949px;
+    margin-top: 10px;
+}
+.graph_container{
+    height: 142px;    
+}

@@ -1,0 +1,15 @@
+#
+# These things are run when an Openbox X Session is started.
+# You may place a similar script in $HOME/.config/openbox/autostart
+# to run user-specific things.
+#
+
+#prevenir que el monitor se duerma
+xset -dpms s off &
+
+#lanza el app en fullscreen
+uzbl-browser -g maximized  http://generador.local.lab/generador/ &
+
+#espera 30 segundos y luego lanza el script y lo envia al bg
+(sleep 30s && /home/mz/generador_valores/start.sh env) &
+

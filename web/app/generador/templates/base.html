@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<script type="text/javascript" src="{{STATIC_URL}}js/ICanHaz.min.js"></script>
+		<link rel="stylesheet" href="{{STATIC_URL}}css/blueprint/screen.css" type="text/css" media="screen, projection">
+		{% block head %}{%endblock head%}
+		<title>	{% block title %}{% endblock title%}</title>
+		</head>
+	<body>
+		{% block content %}{% endblock content %}
+	</body>
+</html>

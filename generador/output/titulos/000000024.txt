@@ -1,0 +1,60 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+00,,,,,00.;;,,-=,-====.;;,,-=,-====.;;,,-=,-====.;;,,-=,-====.;;,,-=,-00,,,,,00
+ 0,,,,,0           oo                .o0o.                oo           0,,,,,0
+   ==-=        ..oo0000oo..       ..oo00000oo..       ..oo0000oo..       ==-=
+   ==-=           numero         fecha de emision        numero          ==-=
+   ==-=         000000024        11/05/2012 13:35      000000024         ==-=
+   ==-=       --==========-- ..--===============--.. --==========--      ==-=
+   ==-=                                                                  ==-=
+   ==-=                  -==;;;;;==--..,,,..--==;;;;;==-                 ==-=
+   ==-=                      ;;;    generador    ;;;                     ==-=
+   ==-=                       ;        de         ;                      ==-=
+   ==-=                      ;;;     valores     ;;;                     ==-=
+   ==-=                  -==;;;;;==--..,,,..--==;;;;;==-                 ==-=
+   ==-=                                                                  ==-=
+                         -----begin certificate----- 
+        miicyjccacscargwdqyjkozihvcnaqefbqawbdelmakga1uebhmcvusxdzanbgnv
+        bagtbkxvbmrvbjepma0ga1uebxmgtg9uzg9umriweaydvqqkewldyw5vbmljywwx
+        ezarbgnvbastclvidw50dsbpbmuxejaqbgnvbamtcwrlegvkcmluztaefw0xmja1
+        mtexnzm1mdlafw0ymja1mdkxnzm1mdlamiggmqswcqydvqqgewjdtzepma0ga1ue
+        cbmgqm9nb3rhmq8wdqydvqqhewzcb2dvdgexhtabbgnvbaotfgdlbmvyywrvcibk
+        zsb2ywxvcmvzmsiwiaydvqqlexlnzw5lcmfkb3igzgugy2vydglmawnhzg9zmriw
+        eaydvqqdewkwmdawmdawmjqwgz8wdqyjkozihvcnaqebbqadgy0amigjaogbalpr
+        3rjmdsdpl/7czpf45v+jcuue7y3b8amwohwj/jnfikp1ptwktf9arcrrzs2h3a4w
+        b7igst7cai2jp9u6/k5grvtpla5ajcisxttrvc7+heyz4vxef+j3e+t+pbqhnt+y
+        6wqmbsqxqoj+lonlsh6y3zadnnwqqvbsi8bxlpahagmbaaewdqyjkozihvcnaqef
+        bqadgyeakv9vjvwegj2nsdurgbwfvv4lamuem+adz3j4hgbiqn4wqz3rbmpqclty
+        1tcxewqif1+97pe4quylugvqbn77iqkn1nf9ib2qitky7u5gv5982ppq+/eknswl
+        ypknyx0rdawwqb4zc+guyqhz/tlurpwwfsbwkns0shap9z6zuze=
+                           -----end certificate-----                    
+   ==-=                                                                  ==-=
+ 0,,,,,0                                                               0,,,,,0
+00,,,,,00.;;,,-=,-====.;;,,-=,-====.;;,,-=,-====.;;,,-=,-====.;;,,-=,-00,,,,,00
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,60 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+00.....00;..;.-.;-----;..;.-.;-----;..;.-.;-----;..;.-.;-----;..;.-.;-00.....00
+ 0.....0           oo                .o0o.                oo           0.....0
+   ====        ..oo0000oo..       ..oo00000oo..       ..oo0000oo..       ====
+   ====           numero         fecha de emision        numero          ====
+   ====         000000054        14/05/2012 17:48      000000054         ====
+   ====       --==========-- ..--===============--.. --==========--      ====
+   ====                                                                  ====
+   ====                  -==;;;;;==--..,,,..--==;;;;;==-                 ====
+   ====                      ;;;    generador    ;;;                     ====
+   ====                       ;        de         ;                      ====
+   ====                      ;;;     valores     ;;;                     ====
+   ====                  -==;;;;;==--..,,,..--==;;;;;==-                 ====
+   ====                                                                  ====
+                         -----begin certificate----- 
+        miicyjccacscatywdqyjkozihvcnaqefbqawbdelmakga1uebhmcvusxdzanbgnv
+        bagtbkxvbmrvbjepma0ga1uebxmgtg9uzg9umriweaydvqqkewldyw5vbmljywwx
+        ezarbgnvbastclvidw50dsbpbmuxejaqbgnvbamtcwrlegvkcmluztaefw0xmja1
+        mtqymtq4mjnafw0ymja1mtiymtq4mjnamiggmqswcqydvqqgewjdtzepma0ga1ue
+        cbmgqm9nb3rhmq8wdqydvqqhewzcb2dvdgexhtabbgnvbaotfgdlbmvyywrvcibk
+        zsb2ywxvcmvzmsiwiaydvqqlexlnzw5lcmfkb3igzgugy2vydglmawnhzg9zmriw
+        eaydvqqdewkwmdawmdawntqwgz8wdqyjkozihvcnaqebbqadgy0amigjaogbanyw
+        ozl5smbnqjmmnkbngeyk6nygwvanewqk+u/enjwazxpeko+ribxafqsoerhrrwyn
+        yzp7ugn0zcn6z8fsvbbedxr5djcmkvh5zm320ob9zouicqy08s/cvt90vjxqmuq+
+        3kj/rpkvczgwtanzzalx4+lm6h8po+c4e0qkfgelagmbaaewdqyjkozihvcnaqef
+        bqadgyeaddtmbaaotfovylzd/iffdwkfws1fy7xsmqtrsftahxsrg9orhbrkdjob
+        b9ayu3jexzq34d94ge7rb29dxffztyutjhnx/vg4wzq3e4ucgkrwhzk7u6aysiub
+        fzrfhvpimfrxfld3r+udcgy001maydsxjwte6f5cwhtoui5kxuo=
+                           -----end certificate-----                    
+   ====                                                                  ====
+ 0.....0                                                               0.....0
+00.....00;..;.-.;-----;..;.-.;-----;..;.-.;-----;..;.-.;-----;..;.-.;-00.....00
+
+
+
+
+
+
+
+
+
+
+
+
+
+
