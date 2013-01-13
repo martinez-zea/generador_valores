@@ -10,7 +10,7 @@ TASTYPIE_FULL_DEBUG = False
 API_LIMIT_PER_PAGE = 60
 
 #database
-GEN_DB =  os.path.join(SITE_ROOT,'database.db')
+GEN_DB = os.path.join(SITE_ROOT, 'database.db')
 
 FORCE_SCRIPT_NAME = ""
 
@@ -25,7 +25,7 @@ GEN_DB = os.path.join(SITE_ROOT, "database.db")
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
+        'ENGINE': 'django.db.backends.sqlite3',  # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
         'NAME': GEN_DB,                      # Or path to database file if using sqlite3.
         'USER': '',                      # Not used with sqlite3.
         'PASSWORD': '',                  # Not used with sqlite3.
@@ -62,7 +62,7 @@ USE_TZ = False
 
 # Absolute filesystem path to the directory that will hold user-uploaded files.
 # Example: "/home/media/media.lawrence.com/media/"
-MEDIA_ROOT = os.path.join(SITE_ROOT, "site_media/media")
+MEDIA_ROOT = os.path.join(SITE_ROOT, '..', "site_media/media")
 
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
 # trailing slash.
@@ -73,7 +73,7 @@ MEDIA_URL = ''
 # Don't put anything in this directory yourself; store your static files
 # in apps' "static/" subdirectories and in STATICFILES_DIRS.
 # Example: "/home/media/media.lawrence.com/static/"
-STATIC_ROOT = os.path.join(SITE_ROOT, "site_media/static")
+STATIC_ROOT = os.path.join(SITE_ROOT, '..', "site_media/static")
 
 # URL prefix for static files.
 # Example: "http://media.lawrence.com/static/"
