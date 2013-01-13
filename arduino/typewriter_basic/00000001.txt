@@ -1,0 +1,38 @@
+
+
+        ()´´*-_       _-*´´*-_                  ()                 *´´*-_       _-*´´*-_  ()
+       ()()    *-._.-*        (_______________()()()_______________)     *-._.-*        *()() 
+       _)(_                                   ) () (                                     _)(_
+      (    )                                   ****                                     (    )
+  )____)  (____(                                **                                  )____)  (____(    
+() ____    ____ ()   _._          _._                       _._          _._      () ____    ____ ()
+  )    )  (    (   .'   '.      .'   '.                   .'   '.      .'   '.      )    )  (    (
+      (_  _)       ! .    numero     . !  fecha emision   ! .    numero     . !         (_  _)
+        )(          '    00000001     '  24/04/2012 17:04  '    00000001     '            )(
+       ()()               ______                                 ______                  ()()
+        ()               (      )                               (      )                  ()
+                          _._         --.                 .--         _._
+                        .'    '.     '---.------(o)------.---'     .'    '.
+                        '   .   '.           GENERADOR           .'   .   '
+                        '._.'    '-.__.'    DE  VALORES   '.__.-'    '._.'
+                                                     
+                                    -----BEGIN CERTIFICATE-----                   
+                  MIICdjCCAd8CAQEwDQYJKoZIhvcNAQEFBQAwbDELMAkGA1UEBhMCVUsxDzANBgNV
+                  BAgTBkxvbmRvbjEPMA0GA1UEBxMGTG9uZG9uMRIwEAYDVQQKEwlDYW5vbmljYWwx
+                  EzARBgNVBAsTClVidW50dSBPbmUxEjAQBgNVBAMTCWRleGVkcmluZTAgFw0xMjA0
+                  MjQyMDA0MzBaGA8zMDExMDgyNjIwMDQzMFowgZgxCzAJBgNVBAYTAkNPMQ8wDQYD
+                  VQQIEwZCb2dvdGExDzANBgNVBAcTBkJvZ290YTEdMBsGA1UEChMUZ2VuZXJhZG9y
+                  IGRlIHZhbG9yZXMxIjAgBgNVBAsTGWdlbmVyYWRvciBkZSBjZXJ0aWZpY2Fkb3Mx
+                  JDAiBgNVBAMTG2VsIG51bWVybyBzZXJpYWwgbyBhbGdvIGFzaTCBnzANBgkqhkiG
+                  9w0BAQEFAAOBjQAwgYkCgYEAxEa3+B9xsSZLYfnkFkj/57hSQ+PhoEj/oyEmhqSZ
+                  mZUv9WUazhnDBEIU9vZgYsKayoDRdfV4VvoLveuCCOYX5w+14e0pkxmmpo1Y95NA
+                  9YEZTx1vJnjcAMLLzcQq+muQTbJWpaNt6w95eZhk+UW0N8nlybKycsybzrOc3Qy8
+                  CacCAwEAATANBgkqhkiG9w0BAQUFAAOBgQBCHt46XdXkdJ3kwE8RPUdCjtA9WyOq
+                  iCmoX8kwGk/z0cWHVkFEjr5KwqB+oo+sQELiV3+5K0QEzytQ9e8Ik7BFnWGQuUBa
+                  Htqa4zvpozx4Y2VbPMNRW9EPQZs/4YkI0sAF9P9eu6W5mRoafTKreZrV7UNKe3Nd
+                  H+zBZ/B3BP2X8g==
+                                     -----END CERTIFICATE-----                    
+                                        _       ()       _
+    _-*´´*-_       _-*´´*-_       _-*´ ( )    ()()()    ( )  ´*-_       _-*´´*-_       _-*´´*-_    
+_.-*        *-._.-*        *-._.-*     l       ]()[       j      *-._.-*        *-._.-*         *-._
+	                                '.__.-'    '-.__.'

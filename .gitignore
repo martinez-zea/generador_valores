@@ -31,3 +31,7 @@ pip-log.txt
 *.sublime-workspace
 env/*
 web_app/app/site_media/static/*
+*.swp
+*.hex
+*.swo
+
