@@ -1,35 +1,39 @@
 from random import randint
 
+
 class Wolfram():
     '''
-    Implementa un automata celular de una dimension, revisando 
+    Implementa un automata celular de una dimension, revisando
     cuatro posibles estados por celda
 
     :param num_cells: numero de celdas a generar
     :type num_cells: int
     '''
-    def __init__(self,num_cells=5):
+    def __init__(self, num_cells=5):
         self.num_cells = num_cells
-        self.rules=[] #reglas
-        self.cells=[] #contenido
-        self.generation = 0 #numero de generaciones
+        #reglas
+        self.rules = []
+        #contenido
+        self.cells = []
+        #numero de generaciones
+        self.generation = 0
 
         for i in range(self.num_cells):
-            self.cells.append(randint(0,4))
+            self.cells.append(randint(0, 4))
 
         for i in range(125):
-            self.rules.append(randint(0,4))
+            self.rules.append(randint(0, 4))
 
     def randomize(self):
         '''
         Regenera las reglas y celdas del sistema
         '''
         for i in range(125):
-            self.rules[i] = randint(0,4)
-        
+            self.rules[i] = randint(0, 4)
+
         for i in range(self.num_cells):
-            self.cells[i] = randint(0,4)
-    
+            self.cells[i] = randint(0, 4)
+
     def generate(self):
         '''
         Aplica las reglas de evolucion, revisando el estado de
@@ -198,5 +202,3 @@ class Wolfram():
         if lft == 4 and me == 4 and rght == 2: return self.rules[122]
         if lft == 4 and me == 4 and rght == 3: return self.rules[123]
         if lft == 4 and me == 4 and rght == 4: return self.rules[124]
-
-

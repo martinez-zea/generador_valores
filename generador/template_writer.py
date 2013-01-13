@@ -3,11 +3,12 @@ from random import randint
 from jinja2 import Environment, PackageLoader
 from wolfram import Wolfram
 
+
 class TemplateWriter():
     '''
     Clase que interactua con Jinja2. el sistema de templates empleado para la
-    generacion de cada uno de los titulos impresos. 
-    
+    generacion de cada uno de los titulos impresos.
+
     :param package: el paquete a usar, por defecto es generador
     :type package: string
     :param template_dir: directorio donde estan los templates a usar
@@ -16,13 +17,13 @@ class TemplateWriter():
     :type output_dir: string
     '''
     def __init__(self, package='generador_valores', template_dir='templates',
-                                                template='baselower.jinja',
+                                                template='base65.jinja',
                                                 output_dir='output/titulos'):
         self.package = package
         self.template_dir = template_dir
         self.template = template
         self.output_dir = output_dir
-        
+
         #cellular automatas
         self.pattern1 = Wolfram(num_cells=9)
         self.pattern2 = Wolfram(num_cells=4)
@@ -38,18 +39,18 @@ class TemplateWriter():
         self.environment.filters['crt_title'] = self.crt_title
         self.base_template = self.environment.get_template(self.template)
 
-    def crt_title(self,value):
+    def crt_title(self, value):
         '''
         Filtro para centrar la primera y ultima linea del string
         entregado
-        
+
         :param value: El strig a centrar
-        :type value: string 
-   
+        :type value: string
+
         '''
         tmp = value.splitlines(True)
-        tmp[0] = tmp[0].rstrip().center(28)+'\n'
-        tmp[len(tmp)-1] = tmp[len(tmp)-1].rstrip().center(64)+'\n'
+        tmp[0] = tmp[0].rstrip().center(28) + '\n'
+        tmp[len(tmp) - 1] = tmp[len(tmp) - 1].rstrip().center(64) + '\n'
         return ''.join(tmp)
 
     def createSource(self, certificate, serial, date):
@@ -63,16 +64,16 @@ class TemplateWriter():
         :type serial: string (8 caracteres)
         :param date: fecha de emision del titulo
         :type date: datetime.datetime
-        
+
         :returns: el path al certificado creado
         '''
-        src_path = os.path.join(self.output_dir, serial+'.txt')
+        src_path = os.path.join(self.output_dir, serial + '.txt')
         #formatea la fecha
         date = date.strftime('%d/%m/%Y %H:%M')
         #lee el certificado
         with open(certificate, 'r') as f:
             crt = f.read()
-        #crea los patrones 
+        #crea los patrones
         pttrn1 = self.translate_pattern1()
         pttrn2 = self.translate_pattern2()
         pttrn3 = self.translate_pattern3()
@@ -82,16 +83,16 @@ class TemplateWriter():
         #inyecta los datos
         src = self.base_template.render(certificate=crt.lower(),
                                         serial=serial,
-                                        date = date,
-                                        pattern1 = pttrn1,
-                                        pattern2 = pttrn2,
-                                        pattern3 = pttrn3,
-                                        borla = borla,
-                                        capitel = capitel)
+                                        date=date,
+                                        pattern1=pttrn1,
+                                        pattern2=pttrn2,
+                                        pattern3=pttrn3,
+                                        borla=borla,
+                                        capitel=capitel)
         #escribe en el archivo
         with open(src_path, 'wt') as fd:
             fd.write(src.encode('utf-8'))
-        
+
         return src_path
 
     def translate_pattern1(self):
@@ -146,14 +147,13 @@ class TemplateWriter():
 
     def borla(self):
         options = ['6', '8', '9', '0']
-        return options[randint(0,len(options)-1)]
+        return options[randint(0, len(options) - 1)]
 
     def capitel(self):
         options = ['!', '-', '=', ';', '.', ',']
-        c = options[randint(0,len(options)-1)]
-        final =''
+        c = options[randint(0, len(options) - 1)]
+        final = ''
         for i in range(5):
-            final +=c
+            final += c
 
         return final
-
