@@ -18,8 +18,9 @@ pyOpenSSL==0.13
 pyserial==2.6
 python-dateutil==2.1
 requests==1.1.0
+requests-transition==1.0.4.0
 simplejson==3.0.7
 six==1.2.0
-slumber==0.5.1
+-e git://github.com/martinez-zea/slumber.git@e5ebc315ba352521413ed78b89d1861b0ef445a8#egg=slumber-dev
 sorl-thumbnail==11.12
 wsgiref==0.1.2
