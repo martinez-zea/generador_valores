@@ -1,3 +1,5 @@
+#! /usr/bin/env python
+
 import datetime
 from threading import Thread, Event, Lock
 import logging

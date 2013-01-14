@@ -10,7 +10,7 @@ class WebApi():
     :type url: string
     '''
     #def __init__(self, url='http://localhost:8000/generador/api/v1/'):
-    def __init__(self, url='http://localhost/generador/api/v1'):
+    def __init__(self, url='http://localhost/generador/api/v1/'):
         self.url = url
         #objeto de coneccion con el api
         self.api = slumber.API(url)
