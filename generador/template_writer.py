@@ -17,7 +17,7 @@ class TemplateWriter():
     :type output_dir: string
     '''
     def __init__(self, package='generador_valores', template_dir='templates',
-                                                template='base65.jinja',
+                                                template='base.jinja',
                                                 output_dir='output/titulos'):
         self.package = package
         self.template_dir = template_dir
@@ -81,7 +81,7 @@ class TemplateWriter():
         capitel = self.capitel()
 
         #inyecta los datos
-        src = self.base_template.render(certificate=crt.lower(),
+        src = self.base_template.render(certificate=crt,
                                         serial=serial,
                                         date=date,
                                         pattern1=pttrn1,
