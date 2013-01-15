@@ -246,7 +246,7 @@ class CreateCert(Thread):
         #instancia de WatchAndPost
         self.watcher = w
         self.api = WebApi()
-        self.tw = TemplateWriter(template='wolfram.jinja')
+        self.tw = TemplateWriter(template='base65.jinja')
         self.ca = Certificate_generator('keys/generador.key',
                                         'keys/generador.crt')
         self.valor_simbolico = simbolico
