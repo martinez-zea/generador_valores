@@ -30,6 +30,7 @@ pip-log.txt
 *.sublime-project
 *.sublime-workspace
 env/*
+tmp/*
 web_app/app/site_media/static/*
 *.swp
 *.hex

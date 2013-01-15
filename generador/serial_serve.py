@@ -12,7 +12,7 @@ lorem = """\n\n\n\nLorem Ipsum Dolor sit amet, consEctEtur (---___--- ) adiPisiC
 
 index = 0
 
-portpattern = "/dev/tty.usbmodem" # patron para buscar el puerto
+portpattern = "/dev/tty.usbmodem"  # patron para buscar el puerto
 
 portname = None
 certname = "test_certificate.txt"
@@ -23,10 +23,12 @@ open_serial()
 open_certificate(certname)
 presses = 0
 
-"""
-Encuentra el puerto serial, con el patron definido en portpattern
-"""
+
 def open_serial():
+    """
+    Encuentra el puerto serial, con el patron definido en portpattern
+    """
+
     if comports:
         for pname in comports():
             if(pname[0].find(portpattern) == 0):
@@ -36,9 +38,10 @@ def open_serial():
     try:
         global port
         port = serial.Serial(portname, 115200)
-        print "Conexion abierta en" , portname
+        print "Conexion abierta en ", portname
     except Exception, error:
         print error
+
 
 def open_certificate(filename):
     try:
@@ -58,11 +61,12 @@ def send_txt(numchars):
         #data = lorem[0:numchars]
         data = '\x03'
     else:
-        data  = certxt[index:newindex]
+        data = certxt[index:newindex]
     print 'text sent'
     index = newindex
     port.write(data)
-    port.flush();
+    port.flush()
+
 
 def main():
     try:
