@@ -78,7 +78,7 @@ class Serial_io:
             self.cert = False
 
         self.port.write(data)
-        #self.port.flush()
+        self.port.flushOutput()
 
 
     def receive_data(self):
@@ -93,6 +93,7 @@ class Serial_io:
             self.port = serial.Serial(self.portname, 115200)
             print("IOERROR: REINICIANDO SERIAL ::::::::::::::::::::::::::")
         if '\n' in buff:
+            print buff
             lines = buff.split('\n')
             if lines[-2]:
                 datain = lines[-2]
@@ -102,13 +103,13 @@ class Serial_io:
                     command = int(datain)
                 except:
                     command = 0
-
+		print command
                 if command  == 5:
                     ahora = time.time()
                     print 'tiempo: ', self.tiempo
                     print 'ahora: ', ahora
                     print 'resta: ', ahora - self.tiempo
-                    if ahora - self.tiempo > 5.0: # solo si han pasado 3 secs desde ultima presion
+                    if ahora - self.tiempo > 0.0: # solo si han pasado 3 secs desde ultima presion
                         self.tiempo = ahora
                         if self.isPrinting == False:
                             self.orderCertificate = True #pide el titulo
@@ -117,7 +118,7 @@ class Serial_io:
                             self.index = 0
 
                         else:    
-                            self.send_data(50)
+                            self.send_data(1)
                             self.presses += 1
             
             buff = lines[-1]
@@ -144,7 +145,7 @@ class Serial_io:
 
 
     def close_com(self):
-        #self.port.flush()
+        self.port.flush()
         self.port.close()
 
 
