@@ -7,6 +7,9 @@ except ImportError:
     comports = None
 
 
+NUMBER_OF_CHARS = 1
+
+
 class Serial_io:
     def __init__(self, portpattern="/dev/ttyACM"):
 
@@ -57,6 +60,7 @@ class Serial_io:
             print error
 
     def write_character(self, char):
+        print "current char: ", char
         self.port.write(char)
 
     def send_data(self, numchars):
@@ -73,7 +77,7 @@ class Serial_io:
         else:
             self.isPrinting = True
             data = self.certxt[self.index:newindex]
-            print data
+            print "NEXT STING: ", data
             self.index = newindex
             self.cert = False
 
@@ -121,7 +125,7 @@ class Serial_io:
                             self.index = 0
 
                         else:
-                            self.send_data(1)
+                            self.send_data(NUMBER_OF_CHARS)
                             self.presses += 1
 
             buff = lines[-1]
