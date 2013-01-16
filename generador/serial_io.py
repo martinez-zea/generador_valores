@@ -109,10 +109,10 @@ class Serial_io:
                 lever = buff[0]
                 sensor_1 = buff[1]
                 sensor_2 = buff[2]
-
+                print "::::: Serial Data Arrived! ::::::"
                 print "Lever: ", lever
-                print "Sensor 1", sensor_1
-                print "Sensor 2", sensor_2
+                print "Sensor 1: ", sensor_1
+                print "Sensor 2: ", sensor_2
 
             except Exception, error:
                 print error
@@ -136,6 +136,10 @@ class Serial_io:
 
                     elif self.isPrinting == False and sensor_1 == 0 and sensor_2 == 1:
                         print "waiting to remove paper"
+                        pass
+
+                    elif self.isPrinting == True and sensor_1 == 0 and sensor_2 == 0:
+                        print "sheet removed before finish"
                         pass
 
                     elif self.isPrinting == True:
