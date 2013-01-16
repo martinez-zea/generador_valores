@@ -79,7 +79,7 @@ class Serial_io:
         else:
             self.isPrinting = True
             data = self.certxt[self.index:newindex]
-            print "NEXT STING: ", data
+            print "NEXT STRING: ", data
             self.index = newindex
             self.cert = False
 
