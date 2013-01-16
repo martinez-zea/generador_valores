@@ -8,16 +8,15 @@ except ImportError:
 
 
 class Serial_io:
-
-
-    def __init__(self, portpattern = "/dev/ttyACM"):
+    def __init__(self, portpattern="/dev/ttyACM"):
 
         """
         Encuentra el puerto serial, con el patron definido en portpattern, abre
         la conexion serial
         """
         self.index = 0
-        self.portpattern = portpattern # patron para buscar el puerto
+        #patron para buscar el puerto
+        self.portpattern = portpattern
         self.portname = None
         self.certname = None
         self.certxt = None
@@ -38,18 +37,17 @@ class Serial_io:
 
         try:
             self.port = serial.Serial(self.portname, 115200)
-            print "Conexion abierta en" , self.portname
+            print "Conexion abierta en: ", self.portname
 
         except Exception, error:
             print error
-
 
     def open_certificate(self, filename):
         '''
         abre el certificado y lo guarda en un string
         '''
         self.certname = filename
-        try:    
+        try:
             with open(self.certname, 'r') as f:
                 self.certxt
                 self.certxt = f.read()
@@ -58,6 +56,8 @@ class Serial_io:
         except Exception, error:
             print error
 
+    def write_character(self, char):
+        self.port.write(char)
 
     def send_data(self, numchars):
         '''
@@ -72,14 +72,15 @@ class Serial_io:
             self.report = self.report_status()
         else:
             self.isPrinting = True
-            data  = self.certxt[self.index:newindex]
+            data = self.certxt[self.index:newindex]
             print data
             self.index = newindex
             self.cert = False
 
-        self.port.write(data)
-        self.port.flushOutput()
-
+        for character in data:
+            self.write_character(character) 
+        #self.port.write(data)
+        #self.port.flushOutput()
 
     def receive_data(self):
         #lee el buffer del puerto serial hasta que encuentre un salto de linea,
@@ -103,24 +104,26 @@ class Serial_io:
                     command = int(datain)
                 except:
                     command = 0
-		print command
-                if command  == 5:
+
+                if command == 5:
                     ahora = time.time()
                     print 'tiempo: ', self.tiempo
                     print 'ahora: ', ahora
                     print 'resta: ', ahora - self.tiempo
-                    if ahora - self.tiempo > 0.0: # solo si han pasado 3 secs desde ultima presion
+                    #solo si han pasado 3 secs desde la ultima presion
+                    if ahora - self.tiempo > 0.0:
                         self.tiempo = ahora
                         if self.isPrinting == False:
-                            self.orderCertificate = True #pide el titulo
+                            #pide el titulo
+                            self.orderCertificate = True
                             self.isPrinting = True
                             self.start_time = datetime.datetime.now()
                             self.index = 0
 
-                        else:    
+                        else:
                             self.send_data(1)
                             self.presses += 1
-            
+
             buff = lines[-1]
             #report = self.report_status()
             #return report
@@ -137,12 +140,11 @@ class Serial_io:
         delta_print = end_time - self.start_time
 
         #tiempo de trabajo, por ahora en presiones * 10
-        work_time = self.presses* 10
-        report = {'print_duration': delta_print.seconds, 
-                'work_time': work_time} 
+        work_time = self.presses * 10
+        report = {'print_duration': delta_print.seconds,
+                'work_time': work_time}
 
         return report
-
 
     def close_com(self):
         #self.port.flush()
@@ -150,5 +152,3 @@ class Serial_io:
         #Clear output buffer, aborting the current output and discarding all that is in the buffer.
         #self.port.flushOutput()
         self.port.close()
-
-
