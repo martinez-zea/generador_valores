@@ -333,7 +333,7 @@ class SerialCom(Thread):
             if self.serial.orderCertificate == True:
                 #crea el certificado
                 cert = self.ca.create()
-                logging.debug('cert: %s', cert)
+                logging.debug('certificate: %s', cert)
                 #lo envia a serial_id
                 self.serial.open_certificate(cert)
                 #cambia el flag
@@ -398,7 +398,7 @@ def main():
         ser.quit()
         ser.join()
 
-        sys.exit(1)
+        sys.exit("closing by CRTL+C")
 
     except Exception, err:
         print err
