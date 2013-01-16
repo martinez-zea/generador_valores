@@ -58,7 +58,7 @@
 #define LED 13
 
 // measured in scans, more or less arbitrarily chosen.
-#define KEYPRESS_DURATION 3
+#define KEYPRESS_DURATION 5
 #define KEYPRESS_GAP 2
 #define IDLE_WINDOW 10000
 
@@ -96,7 +96,7 @@
 #include "debounce.h"
 
 //lcd
-#include "LiquidCrystal.h"
+//#include "LiquidCrystal.h"
 
 //LiquidCrystal lcd(17,16,6,7,8,9);
 //String message = " "; // mensaje para el lcd

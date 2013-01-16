@@ -90,11 +90,18 @@ void init_scans(void) {
 /*
 Inicializa el puerto de lectura del shift.  Solo el primer pin del puerto se usa. PB0 = Digital 53
 */
-
+/*
 void init_shift(){
   DDRB = 0x00;
   PORTB = 0xFF;
 }
+*/
+
+void init_shift(){
+  DDRL = 0x00;
+  PORTL = 0xFF;
+}
+
 /*
  * read_scans --
  *    sample the scanlines
@@ -111,8 +118,19 @@ uint8_t read_scans(void) {
 
 
 //lee el estado del pin
+
+//port for the havana version of the arduino shield
+/*
 uint8_t read_shift(void){
   return PINB;
+}
+*/
+
+//lee el estado del pin
+//this is for the Tampa version of the shield
+
+uint8_t read_shift(void){
+  return PINL;
 }
 
 #endif // _SIGNALS_PLATFORM_H_
