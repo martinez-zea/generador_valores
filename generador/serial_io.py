@@ -78,7 +78,7 @@ class Serial_io:
             self.cert = False
 
         for character in data:
-            self.write_character(character) 
+            self.write_character(character)
         #self.port.write(data)
         #self.port.flushOutput()
 
