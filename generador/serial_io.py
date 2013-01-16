@@ -33,6 +33,7 @@ class Serial_io:
         self.orderCertificate = False
         self.report = None
         self.tiempo = time.time()
+        self.printer_buffer = []
         if comports:
             for pname in comports():
                 if(pname[0].find(portpattern) == 0):
@@ -64,6 +65,7 @@ class Serial_io:
     def write_character(self, char):
         print "current char: ", char
         self.port.write(char)
+        time.sleep(0.25)
 
     def send_data(self, numchars):
         '''
