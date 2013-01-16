@@ -8,7 +8,8 @@ except ImportError:
     comports = None
 
 
-NUMBER_OF_CHARS = 1
+NUMBER_OF_CHARS = 32
+DELAY_TIME = 0.20
 
 
 class Serial_io:
@@ -65,7 +66,7 @@ class Serial_io:
     def write_character(self, char):
         print "current char: ", char
         self.port.write(char)
-        time.sleep(0.25)
+        time.sleep(DELAY_TIME)
 
     def send_data(self, numchars):
         '''
