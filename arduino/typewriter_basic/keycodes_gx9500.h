@@ -23,6 +23,11 @@
  * OTHER DEALINGS IN THE SOFTWARE.
  */
 
+/*
+*This file contains keycodes for the brother gx 9500 typewriter with spanish keyboard 
+*
+*/
+
 #ifndef _KEYCODES_H_
 #define _KEYCODES_H_ 1
 #include <stdint.h>

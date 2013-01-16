@@ -1,3 +1,8 @@
+/*
+*este sketch sirve para calcular los ciclos que se demora 
+*una liena de senial de la maquina de escribir
+*/
+
 int ser = 0;
 int pin = 23;
 int led = 13;

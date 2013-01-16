@@ -44,7 +44,7 @@
  * disables flooding the typewriter's lines to prevent passing keys when there
  * is nothing being actively written.
  */
-#define KEYBOARD_PASSTHROUGH
+//#define KEYBOARD_PASSTHROUGH
 
 /*
  * TODO: though I'm tempted to throw the metapass idea out, it would still be
@@ -60,9 +60,15 @@
 // measured in scans, more or less arbitrarily chosen.
 #define KEYPRESS_DURATION 3
 #define KEYPRESS_GAP 2
+#define IDLE_WINDOW 10000
 
 // measured in ms
-#define SCANLINE_INTERVAL 4
+ /* 
+ 4 funciona muy bien quitando tambien las funciones de lectura del teclado de la maquina,
+ No estoy seguro de porque, pienso que es un desfase en la lectura de las seniales
+ */
+ 
+#define SCANLINE_INTERVAL 6
 
 // measured in… baud
 #define BAUD 115200
@@ -84,11 +90,16 @@
 #include "signals.h"
 
 // tables of key codes for reading and writing
-#include "keycodes_gx9500.h"
-
+//#include "keycodes_gx9500.h"
+#include "keycodes_gx6500.h";
 // debouncer for tracking scanline state
 #include "debounce.h"
 
+//lcd
+#include "LiquidCrystal.h"
+
+//LiquidCrystal lcd(17,16,6,7,8,9);
+//String message = " "; // mensaje para el lcd
 /*
  * global state
  */
@@ -105,21 +116,8 @@ struct {
   uint32_t scanedge;
 } loopstate;
 
-// input signal state
-uint8_t signal_tracker[] = {
-  0xFF, 0xFF, 0xFF, 0xFF,
-  0xFF, 0xFF, 0xFF, 0xFF
-};
 
-// bitfield of width 3.  what a waste
-uint8_t meta_key_state;
-
-#ifdef PLSWRITE
-/*
- * key code the read side would like to be written by the write side
- */
-uint8_t plswrite;
-#endif
+boolean isPrinting;
 
 // write-local persistant state
 struct {
@@ -143,228 +141,37 @@ struct {
 
 } writestate;
 
-boolean writeshift;
-/*
- * read_keydown --
- *    actions to be taken when a key is pressed.  includes:
- *      * meta key state tracking
- *      * serial output of appropriate codes based on previous state
- *
- * args:
- *    keycode - the keycode for the key held down
- */
-
-void read_keydown(uint8_t keycode) {
-#ifndef DEBUG
-  digitalWrite(STS, HIGH);
-#endif
-
-  // meta key states
-  if(HINIBBLE(keycode) == 0x01) {
-    if(keycode == SHIFT_LOCK) {
-      keycode = SHIFT;
-    }
-
-#ifdef METAPASS
-#ifdef PLSWRITE
-    // update the typewriter's display to reflect the shift key being held
-    if(keycode == SHIFT) {
-      plswrite = SHIFT_LOCK;
-    }
-#endif
-#endif
-
-    meta_key_state |= LONIBBLE(keycode);
-  }
-
-
-#ifndef DEBUG_WRITES
-  Serial.print(keycode);
-#endif
-}
-
-
-
-/*
- * read_keyheld --
- *    actions to be taken while a key is held.
- *
- * args:
- *    keycode - the keycode for the key held down
- */
-void read_keyheld(uint8_t keycode) {
-#ifndef DEBUG
-  digitalWrite(STS, HIGH);
-#endif
-
-  return;
-}
-
-/*
- * read_keyup --
- *    actions to be taken when a key is released.  currently:
- *      * meta key state tracking
- *
- * args:
- *    keycode - the keycode for the key held down
- */
-void read_keyup(uint8_t keycode) {
-#ifndef DEBUG
-  digitalWrite(STS, LOW);
-#endif
-
-  // meta key states
-  if(HINIBBLE(keycode) == 0x01 && keycode != SHIFT_LOCK)
-    meta_key_state &= 0x0F ^ LONIBBLE(keycode);
-
-#ifdef PLSWRITE
-#ifdef METAPASS
-  // reset the typewriter's display to reflect shift not held
-  if(keycode == SHIFT)
-    plswrite = SHIFT;
-#endif
-
-  switch(keycode) {
-    case RESET:
-      plswrite = RESET;
-      break;
-  }
-#endif
-
-#ifndef DEBUG_WRITES
-  Serial.print(keycode);
-#endif
-
-  return;
-}
-
-/*
- * read_getsignals --
- *    delivers the intentional signal state. this is ensured by detecting if
- *    the possibility of a current loop exists between 4 or more keycodes.
- *
- * args:
- *    scannum: the number of the scanline that the typewriter is polling
- *
- * returns:
- *    if multiple scanlines are down and multiple signal lines on the current
- *    scan are down, a cached value is used as the signal, otherwise the
- *    actual signal is used.
- */
-uint8_t read_getsignals(uint8_t scannum) {
-  uint8_t scans = read_scans();
-  uint8_t signs = read_signs();
-  int8_t numscans;
-  uint8_t i;
-
-  // if only one scanline is down, we don't have to do anything fancy.
-  if((~scans & (~scans - 1) & 0xFF) == 0)
-    return signs;
-
-  /*
-   * if scanline 7 is one of the lines down, don't worry—only shift and
-   * shift lock live on it.
-   *
-   * NB: this is done in advance because the counting loop clobbers scans
-   */ 
+struct{
+  //boton de la palanca
+  uint8_t boton:1; 
   
-  if(~scans & BIT(7))
-    numscans--;
-
-  // count the number of scanlines that are lowered
-  for(i = ~scans, numscans = 0; i > 0; i >>= 1)
-    if(i & 0x01)
-      numscans++;
-
-  /*
-   * phantom keys only appear when multiple signals are down as well as
-   * multiple scans.
-   */
-  if(numscans > 1 && (~signs & (~signs - 1) & 0xFF)) {
-    /* TODO:
-     * right now pulling the STS low is almost immediately overridden by
-     * read_keyheld. fixing this probably involves returning a bogus value
-     * like 0x00, which is hacky, or some more shared state in the code.
-     *
-     * so for now, this does nothing.
-     */
-#ifndef DEBUG
-    digitalWrite(STS, LOW);
-#endif
-    signs = signal_tracker[scannum];
-  }
-
-  return signs;
-
-  /*
-   * BUT WAIT!
-   *
-   * there is even more we can do here.
-   *
-   * RESET          >
-   * x--------------x
-   * |              |
-   * x--------------x
-   * <              NC
-   *
-   * in the case above, where RESET, >, and < are held (with the CODE meta
-   * key also held) it is clear that all three are intentional keypresses
-   * because the phantom press is an NC (Not Connected) keycode.
-   *
-   * searching all paths to ensure that every rectangle of sunk lines
-   * contains one NC key solves the multiple-scanline problem, but is only
-   * necessary when the meta keys ALT and CODE are used—in regular typing
-   * the only NC keys are on the same scanline as SHIFT and SHIFT_LOCK, so
-   * the more efficient approach of not counting scanline 7 when counting
-   * how many scanlines are down is effective in the vast majority of cases.
-   */
-}
-
-/*
- * do_read --
- *    performs a scan of the active (down) scanlines and correspondingly active
- *    signallines and reports (over Serial) the changes.
- *
- * args:
- *    scans - the current state of the scanlines, to prevent an unnecessary poll
- */
-void do_read(uint8_t scans) {
-  uint8_t scannum, signs;
-
-  // avoid getting called out of range
-  if(scans == 0xFF) return;
-  // get the active scanline
-  for(scannum = 0; (BIT(scannum) & ~scans & 0xFF) == 0; scannum++);
-
-  signs = read_getsignals(scannum);
-  //Serial.print("reading: ");
-  //Serial.println(signs);
+  //sensor de entrada de papel
+  uint8_t paperin:1; 
   
-  for(uint8_t j = 1, signum = 0; j > 0; j <<= 1, signum++) {
-    uint8_t keycode;
+  //sensor de salida de papel
+  uint8_t paperout:1;
+  
+  //conteo de palancazos
+  uint8_t press:1; 
+  
+  uint32_t count; 
+}sensors;
 
-    // common case: no key down.
-    if((j & signs) && (j & signal_tracker[scannum]))
-      continue;
 
-    // do the keycode lookup here since all execution paths need it
-    keycode = pgm_read_word_near((uint8_t *)keycodes + ((meta_key_state << 6) | (scannum * 8 + signum)));
 
-    // next most common: key held down
-    if(!(j & signs) && !(j & signal_tracker[scannum]))
-      read_keyheld(keycode);
-    // key pressed and key raised are equally uncommon
-    else if(!(j & signs) && (j & signal_tracker[scannum]))
-      read_keydown(keycode);
-    else
-      read_keyup(keycode);
-  }
+enum main_state_enum{
+  WAITING = 0,
+  INIT_PRINT = 1,  
+  WRITING = 2,
+  END_PRINT = 3,  
+};
 
-  // remember the new state
-  signal_tracker[scannum] = signs;
 
-  return;
-}
+main_state_enum main_state;
+uint32_t wait_window = 10000; 
+boolean request_txt;
+boolean newprint = false;
+int count = 0;
 
 /*
  * write_getcodes --
@@ -391,7 +198,7 @@ void write_getcodes() {
         writestate.shift = 0;
         return;
       case 92:
-        Serial.println("shift detected");
+        //Serial.println("shift detected");
         writestate.meta = 0;
         writestate.signal = 0;
         writestate.scan = 0;
@@ -460,19 +267,19 @@ void write_getcodes() {
  *    write_consume DOES NOT BLOCK
  */
 void write_consume(void) {
-#ifdef PLSWRITE
-  if(plswrite) {
-    writestate.character = plswrite;
-    plswrite = 0;
-  }
-  else
-#endif
-  if(Serial.available()) {
-    writestate.character = Serial.read();
 
+  if(Serial.available()) {
+    writestate.character = Serial.read();  
   }
 
   if(writestate.character) {
+    if(writestate.character == 0x03){ //ETX terminacion de impresion
+      //Serial.println("end");
+      writestate.character = 0;
+      //isPrinting = false;
+      Serial.flush();
+      return;
+    }
     // populate the writestate
     writestate.writing = 1;
     write_getcodes();
@@ -481,7 +288,7 @@ void write_consume(void) {
     if(writestate.meta > 0x07) {
       writestate.character = 0;
       writestate.writing = 0;
-      Serial.print(ERR);
+      //Serial.print(ERR);
     }
   }
 
@@ -498,29 +305,20 @@ void write_consume(void) {
  *           the meta_key_state from the read logic.
  *    scans - the current state of the scanlines
  */
-uint8_t write_metagen(uint8_t meta,uint8_t scans, uint8_t wshift, uint8_t shift) {
+uint8_t write_metagen(uint8_t meta,uint8_t scans) {
   uint8_t signals = 0xFF;
 
   // only the lower three bits are valid
-  if(meta & 0xF8) {
-    Serial.println("return");
-  return signals;
-  }
+  if(meta & 0xF8) 
+    return signals;
 
   // SHIFT
   if(meta & BIT(0) && scans == MASK(7)){
     //Serial.print("meta shift: ");
     //Serial.println(shift, BIN);
     signals &= MASK(0);
-    //signals &= 0xFE; // baja el bit menos significativo
    }
 
-  // shift
-  //if(meta & BIT(0) && shift == B11111110){
-    //Serial.println("shift press"); 
-    //signals &= MASK(0);
-    //signals = 0xFF;
-  //}
   // CODE
   if(meta & BIT(1) && scans == MASK(6))
     signals &= MASK(7);
@@ -541,60 +339,50 @@ uint8_t write_metagen(uint8_t meta,uint8_t scans, uint8_t wshift, uint8_t shift)
  * args:
  *    scans - the current state of the scanlines
  */
-void do_write(uint8_t scans, uint8_t shift) {
+void do_write(uint8_t scans) {
   uint8_t signals = 0xFF;
-
-#ifdef KEYBOARD_PASSTHROUGH
-  if(!writestate.writing)
-    init_read();
-#endif
 
   /*
    * the best time to consume input is when all the scanlines are high.
    * it happens often enough—every 16ms—and nothing much is happening on
    * our end: it's 2ms of totally free time in which to do our extra work.
    */
-  if(scans == 0xFF) {
-    if(!writestate.writing)
+  if(scans == 0xFF ) {
+    //Serial.println("FF");
+    if(!writestate.writing){
+        count++;
+      if(request_txt){
+        //Serial.flush();
+        //Serial.print(0x05, HEX);
+        Serial.println(0x05,HEX);
+        request_txt = false;
+      }
       write_consume();
-    else
+    }else{
       writestate.writing++;
-    
+    }
     return;
   }
 
   if(writestate.character) {
-#ifndef DEBUG
-    digitalWrite(STS, HIGH);
-#endif
 
     // hold down the appropriate meta key(s)
     if(writestate.meta){
-      signals &= write_metagen(writestate.meta, scans, writestate.shift, shift);
-      signals &= 0xFF;
-      Serial.print("meta signal : ");
-      Serial.println(signals, BIN); 
+      signals &= write_metagen(writestate.meta, scans);
+      //Serial.print("meta signal : ");
+      //Serial.println(signals, BIN); 
     }
     // after the meta key(s) (if applicable) have been held long enough, type the character
     if(writestate.writing > KEYPRESS_DURATION * !!writestate.meta)
       if(scans == MASK(writestate.scan))
         signals &= MASK(writestate.signal);
-        //Serial.print("escrita: ");
-        //Serial.print(signals, BIN);
-        //Serial.print("  ");
-        //Serial.println(signals, HEX);
     // stop holding the keys, but continue blocking writes
     if(writestate.writing == KEYPRESS_DURATION * (1 + !!writestate.meta)) {
-#ifndef DEBUG
-      digitalWrite(STS, LOW);
-#endif
+
       writestate.character = 0;
     }
   }
 
-#ifdef KEYBOARD_PASSTHROUGH
-  if(writestate.writing)
-#endif
   write_signs(signals);
   
   /*
@@ -608,49 +396,117 @@ void do_write(uint8_t scans, uint8_t shift) {
 }
 
 /*
+*  init_machine()
+*  inicaliza el estado de la maquina de escribir.  
+*/
+
+void init_machine(){
+
+}
+
+void update_machine(){
+
+}
+
+/*
+*  send_command()
+*
+*envia comandos al generador, los comandos concuerdan con comandos de control ascii
+*se integra con los comandos de la maquina;
+*/
+
+void send_command(uint8_t command){
+  Serial.println(command);
+}
+
+/*
+*  capture_data()
+*  captura los datos de los sensores en tiempo de espera
+*
+*/
+void update_input(){
+  uint8_t port = read_shift(); // con el shift estan los sensores
+  //Serial.println(port, BIN);  
+  uint8_t b = port & (1 >> 0); //obtiene el 1er bit, corresponde al pin del sensor 
+  //Serial.println(b);
+  sensors.paperin = port >> 1;
+  sensors.paperout = port >> 2;
+  //Serial.println(sensors.paperout);
+  if(sensors.boton && !b){
+    
+    // si no hay papel en la maquina
+    //if(isPrinting){
+      if(sensors.paperin | sensors.paperout){
+        request_txt = true;
+        //Serial.println("bang");
+        //isPrinting = true;
+        //lcd.clear();
+        //lcd.print("PRINTING A");
+      }
+      //else{
+        //lcd.clear();
+        //lcd.print("INSERT PAPER");
+      //}
+      /*
+    }
+     else{
+       if(!sensors.paperin && !sensors.paperout){
+         lcd.clear();
+         lcd.print("INSERT PAPER"); 
+        }
+       if(sensors.paperin && !sensors.paperout){
+         isPrinting = true;
+         request_txt = true;
+         lcd.clear();
+         lcd.print("PRINTING B");  
+       }
+       if(!sensors.paperin && sensors.paperout ){
+          lcd.clear();
+          lcd.print("RETIRE PAPER"); 
+       }
+     }
+     */
+  }
+  sensors.boton = b;
+  //sensors.boton = port >> 0; // update sensor reading
+  //Serial.println(sensors.boton, BIN);
+}
+
+
+/*
  * setup --
  *    standard Arduino function.  initialize pins, ports, Serial.
  */
 void setup(void) {
-  // pin 2 is used for timing instrumentation
-  pinMode(2, OUTPUT);
 
   Serial.begin(BAUD);
-
-  /*
-   * the LED pin is not connected to the typewriter's signal or scan lines
-   * because it is used as output during boot, which causes phantom keystrokes
-   * on the typewriter.  that's ok, since we're using the LED pin (along with
-   * the debug pin(2)) to emit state.
-   */
   digitalWrite(LED, HIGH);
 
   init_scans();
-  init_shift();
   init_read();
+  init_shift();
   write_signs(0xFF);
+  //isPrinting = false;
 
   digitalWrite(LED, LOW);
+  sensors.boton = 0;
+  //lcd.begin(16, 2);
+  //lcd.setCursor(0,0);
+  //lcd.print("init");
 }
 
 /*
  * loop --
  *    standard Arduino function.
  */
-void loop(void) {
+void loop(void) { 
   uint8_t scans = read_scans();
   //lee shift
-  uint8_t shift = read_shift();
-  
+  //Serial.println(scans, BIN);
   uint8_t changes = debounce(scans, &loopstate.debouncer);
-  uint8_t shiftchanges = debounce(shift, &loopstate.shiftdebouncer);
-  //Serial.println(changes);
-  //Serial.println(shift);
-  //if(shiftchanges) Serial.println("shift");
-//
-  if(changes || shiftchanges) {
+  //uint8_t shiftchanges = debounce(shift, &loopstate.shiftdebouncer);
+  if(changes) {
     loopstate.scanedge = millis();
-    //Serial.println("ch");
     /*
      * ensure that only one (or zero!) scanline is down
      */
@@ -658,27 +514,15 @@ void loop(void) {
       return;
 
     digitalWrite(LED, HIGH);
-
     //init_read();
     //write_signs(0xFF);
-    //do_read(scans); // lee el estado de las lineas de senial, solo para sensar la tecla presionada en la maquina
-
     init_write();
-    do_write(scans, shift); //escribe el estado a las lineas
+    do_write(scans); //escribe el estado a las lineas
 
     digitalWrite(LED, LOW);
   }
+  update_input();
   
-  /*
-  if(shiftchanges && !changes){
-    loopstate.scanedge = millis();
-    //init_read();
-    //write_signs(0xFF);
-    init_write();
-    //Serial.println("sf");
-    do_write(scans, shift);
-  }
-*/
   /*
    * in normal operation, the scanlines change every 2ms, with a range reliably
    * between 1950 and 2050 µs. if we've waited much longer than that for a
@@ -697,6 +541,7 @@ void loop(void) {
     write_signs(0xFF);
 
     while(loopstate.debouncer.state == read_scans());
+    
     /*
      * sometimes there is a little bit of noise that could cause us to
      * mistakenly start polling in read/write mode. this 1ms delay should

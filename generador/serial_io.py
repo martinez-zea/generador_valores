@@ -145,6 +145,9 @@ class Serial_io:
 
     def close_com(self):
         #self.port.flush()
+
+        #Clear output buffer, aborting the current output and discarding all that is in the buffer.
+        #self.port.flushOutput()
         self.port.close()
 
 
