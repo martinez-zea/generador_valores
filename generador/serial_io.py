@@ -1,6 +1,7 @@
 import time
 import serial
 import datetime
+import sys
 try:
     from serial.tools.list_ports import comports
 except ImportError:
@@ -40,10 +41,11 @@ class Serial_io:
 
         try:
             self.port = serial.Serial(self.portname, 115200)
-            print "Conexion abierta en: ", self.portname
+            print "Open connection on: ", self.portname
 
         except Exception, error:
             print error
+            sys.exit("Error trying to connect to serial port")
 
     def open_certificate(self, filename):
         '''
@@ -151,8 +153,6 @@ class Serial_io:
         return report
 
     def close_com(self):
-        #self.port.flush()
-
         #Clear output buffer, aborting the current output and discarding all that is in the buffer.
-        #self.port.flushOutput()
+        self.port.flushOutput()
         self.port.close()
