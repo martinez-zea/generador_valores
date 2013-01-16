@@ -64,7 +64,7 @@ class Serial_io:
             print error
 
     def write_character(self, char):
-        print "current char: ", char
+        #print "current char: ", char
         self.port.write(char)
         time.sleep(DELAY_TIME)
 
@@ -118,7 +118,7 @@ class Serial_io:
                 print error
                 pass
 
-            if lever == 5:
+            if lever == '5':
                 ahora = time.time()
                 print 'tiempo: ', self.tiempo
                 print 'ahora: ', ahora
@@ -126,19 +126,23 @@ class Serial_io:
                 #solo si han pasado 3 secs desde la ultima presion
                 if ahora - self.tiempo > 0.0:
                     self.tiempo = ahora
-                    if self.isPrinting == False and sensor_1 == 1 and sensor_2 == 0:
+                    if self.isPrinting == False and sensor_1 == '1' and sensor_2 == '0':
                         print "Starting new certificate"
                         #pide el titulo
                         self.orderCertificate = True
                         self.isPrinting = True
                         self.start_time = datetime.datetime.now()
                         self.index = 0
+                       
+                        for a in range(12):
+                            self.write_character('\n')
 
-                    elif self.isPrinting == False and sensor_1 == 0 and sensor_2 == 1:
+
+                    elif self.isPrinting == False and sensor_1 == '0' and sensor_2 == '1':
                         print "waiting to remove paper"
                         pass
 
-                    elif self.isPrinting == True and sensor_1 == 0 and sensor_2 == 0:
+                    elif self.isPrinting == True and sensor_1 == '0' and sensor_2 == '0':
                         print "sheet removed before finish"
                         pass
 

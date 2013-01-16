@@ -91,7 +91,7 @@ class Certificate_generator():
         #firma el certificado con la llave del CA
         cert.sign(self.CA_privateKey, 'sha1')
 
-        digest = cert.get_digest('md5')
+        digest = cert.digest('md5')
 
         with open(cert_path, 'wt') as fd:
             fd.write(crypto.dump_certificate(crypto.FILETYPE_PEM, cert))

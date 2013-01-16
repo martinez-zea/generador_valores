@@ -82,6 +82,7 @@ class TemplateWriter():
 
         #inyecta los datos
         src = self.base_template.render(certificate=crt,
+					digest=digest,
                                         serial=serial,
                                         date=date,
                                         pattern1=pttrn1,
