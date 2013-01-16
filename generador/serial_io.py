@@ -8,7 +8,7 @@ except ImportError:
     comports = None
 
 
-NUMBER_OF_CHARS = 32
+NUMBER_OF_CHARS = 10
 DELAY_TIME = 0.20
 
 
