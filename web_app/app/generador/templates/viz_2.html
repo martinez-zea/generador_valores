@@ -35,25 +35,25 @@ generador de valores - visualizaci&oacute;n de estado del sistema
 			<div id="timestamp" class="span-9 bolder">{{timestamp}}</div>
 			<div id="num_titulos" class="span-9">
 				<div class="span-5 bold">
-					N&uacute;mero de t&iacute;tulos emitidos: 
+					Number of emitted shares: 
 				</div>
 				<div class="span-3">{{num_titulos_emitidos}}</div>
 			</div>
 			<div id="valor" class="span-10">
 				<div class="span-5 bold">
-					Valor unitario: 
+					Share price: 
 				</div>
 				<div class="span-3">$ {{valor_unitario}}</div>
 			</div>
 			<div id="tiempo" class="span-9">
 				<div class="span-5 bold">
-					Tiempo de actividad:
+					Actitivity time:
 				</div>
 				<div>{{tiempo_actividad}} segundos</div>
 			</div>
 			<div id="capital" class="span-10">
 				<div class="span-5 bold">
-					Capital acumulado:
+					Total capital:
 				</div>
 				<div class="span-3">$ {{capital}}</div>
 			</div>
@@ -61,13 +61,13 @@ generador de valores - visualizaci&oacute;n de estado del sistema
 		<div class="span-14 last">
 			<div class="span-14 append-bottom d_graph">
 				<div class="span-2 append-bottom">
-                    <span class="subtitle">Valor unitario <br/>60 minutos</span>
+                    <span class="subtitle">Share price <br/>60 minutes</span>
 				</div>
 				<div id="valor_60" class="span-12 last">loading .... </div>
 			</div>
 			<div class="span-14 append-bottom">
 				<div class="span-2">
-                    <span class="subtitle">Capital <br/>60 minutos</span>
+                    <span class="subtitle">Capital <br/>60 minutes</span>
 				</div>
 				<div id="capital_60" class="span-12 last">loading ....</div>
 			</div>
@@ -75,9 +75,9 @@ generador de valores - visualizaci&oacute;n de estado del sistema
 	</script>
 
   <script id="day_state" type="text/html">
-        <div id="periodo" class="span-23 bolder">Periodo: {{periodo}}</div>
+        <div id="periodo" class="span-23 bolder">Period: {{periodo}}</div>
         <div id="valor_" class="prepend-1 span-24 append-bottom">
-            <div class="subtitle span-3 label_d">Valor unitario</div>
+            <div class="subtitle span-3 label_d">Share price </div>
             <div id="valor_week_graph" class="span-19 last">loading ...</div>
         </div>
         <div id="capital_" class="prepend-1 span-24">
