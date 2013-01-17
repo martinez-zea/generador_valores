@@ -133,14 +133,15 @@ class Serial_io:
                         self.isPrinting = True
                         self.start_time = datetime.datetime.now()
                         self.index = 0
-                       
+
                         for a in range(12):
                             self.write_character('\n')
 
-
                     elif self.isPrinting == False and sensor_1 == '0' and sensor_2 == '1':
                         print "waiting to remove paper"
-                        pass
+
+                        for a in range(12):
+                            self.write_character('\n')
 
                     elif self.isPrinting == True and sensor_1 == '0' and sensor_2 == '0':
                         print "sheet removed before finish"
