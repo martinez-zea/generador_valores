@@ -8,7 +8,8 @@ except ImportError:
     comports = None
 
 
-NUMBER_OF_CHARS = 1
+NUMBER_OF_CHARS = 10
+DELAY_TIME = 0.20
 
 
 class Serial_io:
@@ -33,6 +34,7 @@ class Serial_io:
         self.orderCertificate = False
         self.report = None
         self.tiempo = time.time()
+        self.printer_buffer = []
         if comports:
             for pname in comports():
                 if(pname[0].find(portpattern) == 0):
@@ -62,8 +64,9 @@ class Serial_io:
             print error
 
     def write_character(self, char):
-        print "current char: ", char
+        #print "current char: ", char
         self.port.write(char)
+        time.sleep(DELAY_TIME)
 
     def send_data(self, numchars):
         '''
@@ -79,7 +82,7 @@ class Serial_io:
         else:
             self.isPrinting = True
             data = self.certxt[self.index:newindex]
-            print "NEXT STING: ", data
+            print "NEXT STRING: ", data
             self.index = newindex
             self.cert = False
 
@@ -100,37 +103,56 @@ class Serial_io:
             self.port = serial.Serial(self.portname, 115200)
             print("IOERROR: REINICIANDO SERIAL ::::::::::::::::::::::::::")
         if '\n' in buff:
-            print buff
-            lines = buff.split('\n')
-            if lines[-2]:
-                datain = lines[-2]
-                #sucio hack para lidiar con un 'invalid literal' cuando llega
-                #algo de basura en por el serial
-                try:
-                    command = int(datain)
-                except:
-                    command = 0
+            #init var with random data
+            lever = sensor_1 = sensor_2 = 9
+            try:
+                lever = buff[0]
+                sensor_1 = buff[1]
+                sensor_2 = buff[2]
+                print "::::: Serial Data Arrived! ::::::"
+                print "Lever: ", lever
+                print "Sensor 1: ", sensor_1
+                print "Sensor 2: ", sensor_2
 
-                if command == 5:
-                    ahora = time.time()
-                    print 'tiempo: ', self.tiempo
-                    print 'ahora: ', ahora
-                    print 'resta: ', ahora - self.tiempo
-                    #solo si han pasado 3 secs desde la ultima presion
-                    if ahora - self.tiempo > 0.0:
-                        self.tiempo = ahora
-                        if self.isPrinting == False:
-                            #pide el titulo
-                            self.orderCertificate = True
-                            self.isPrinting = True
-                            self.start_time = datetime.datetime.now()
-                            self.index = 0
+            except Exception, error:
+                print error
+                pass
 
-                        else:
-                            self.send_data(NUMBER_OF_CHARS)
-                            self.presses += 1
+            if lever == '5':
+                ahora = time.time()
+                print 'tiempo: ', self.tiempo
+                print 'ahora: ', ahora
+                print 'resta: ', ahora - self.tiempo
+                #solo si han pasado 3 secs desde la ultima presion
+                if ahora - self.tiempo > 0.0:
+                    self.tiempo = ahora
+                    if self.isPrinting == False and sensor_1 == '1' and sensor_2 == '0':
+                        print "Starting new certificate"
+                        #pide el titulo
+                        self.orderCertificate = True
+                        self.isPrinting = True
+                        self.start_time = datetime.datetime.now()
+                        self.index = 0
 
-            buff = lines[-1]
+                        for a in range(12):
+                            self.write_character('\n')
+
+                    elif self.isPrinting == False and sensor_1 == '0' and sensor_2 == '1':
+                        print "waiting to remove paper"
+
+                        for a in range(12):
+                            self.write_character('\n')
+
+                    elif self.isPrinting == True and sensor_1 == '0' and sensor_2 == '0':
+                        print "sheet removed before finish"
+                        pass
+
+                    elif self.isPrinting == True:
+                        print "Send data to printer"
+                        self.send_data(NUMBER_OF_CHARS)
+                        self.presses += 1
+            #reset vars
+            lever = 9
             #report = self.report_status()
             #return report
 
