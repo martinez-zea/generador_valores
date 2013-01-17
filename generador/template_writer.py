@@ -53,7 +53,7 @@ class TemplateWriter():
         tmp[len(tmp) - 1] = tmp[len(tmp) - 1].rstrip().center(64) + '\n'
         return ''.join(tmp)
 
-    def createSource(self, certificate, serial, date):
+    def createSource(self, certificate, digest, serial, date):
         '''
         Inyecta en el template la info entregada en las variables y escribe un
         archivo el resultado.
@@ -82,6 +82,7 @@ class TemplateWriter():
 
         #inyecta los datos
         src = self.base_template.render(certificate=crt,
+					digest=digest,
                                         serial=serial,
                                         date=date,
                                         pattern1=pttrn1,

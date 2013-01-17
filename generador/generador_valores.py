@@ -295,7 +295,7 @@ class CreateCert(Thread):
 
         logging.debug('certificado: %s', CA_response)
 
-        source = self.tw.createSource(CA_response['certificate'],
+        source = self.tw.createSource(CA_response['certificate'], CA_response['digest'],
                         str(new_num).zfill(9), now)
 
         new_post = self.api.post_valor(new_num, now,
